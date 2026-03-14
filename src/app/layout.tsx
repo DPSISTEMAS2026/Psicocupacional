@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const SmileyIcon = ({ color }: { color: string }) => (
-  <svg width="20" height="12" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: '2px' }}>
+  <svg width="22" height="14" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: '2px' }}>
     <circle cx="35" cy="20" r="10" fill={color} />
     <circle cx="65" cy="20" r="10" fill={color} />
     <path d="M20 40C20 40 35 55 50 55C65 55 80 40 80 40" stroke={color} strokeWidth="10" strokeLinecap="round" />
@@ -82,7 +82,7 @@ export default function RootLayout({
                 src="/assets/logo-sin-fundacion.png" 
                 alt="Logo Psicocupacional" 
                 style={{ 
-                  height: '180%', 
+                  height: '210%', 
                   width: 'auto', 
                   objectFit: 'contain',
                   position: 'absolute',
