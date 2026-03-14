@@ -55,6 +55,7 @@ body {
   text-decoration: none;
   transition: all 0.2s ease;
   position: relative;
+  white-space: nowrap;
 }
 
 .nav-link-premium svg {

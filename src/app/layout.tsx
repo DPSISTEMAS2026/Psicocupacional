@@ -170,7 +170,7 @@ export default function RootLayout({
               </div>
               <div>
                 <h4 style={{ marginBottom: '1.5rem', fontSize: '1rem', color: 'var(--calipso)' }}>Contacto</h4>
-                <p style={{ opacity: 0.7, fontSize: '0.9rem', marginBottom: '0.5rem' }}>📍 San Pedro de la Paz, Chile</p>
+                <p style={{ opacity: 0.7, fontSize: '0.9rem', marginBottom: '0.5rem' }}>📍 Quintero, V Región, Chile</p>
                 <p style={{ opacity: 0.7, fontSize: '0.9rem' }}>📧 contacto@psicocupacional.cl</p>
               </div>
             </div>

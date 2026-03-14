@@ -20,7 +20,7 @@ export default function Contacto() {
               {[
                 { label: "Correo Electrónico", value: "contacto@psicocupacional.cl", accent: "var(--calipso)" },
                 { label: "WhatsApp / Teléfono", value: "+56 9 1234 5678", accent: "var(--magenta)" },
-                { label: "Ubicación", value: "Viña del Mar, Chile", accent: "var(--yellow)" }
+                { label: "Ubicación", value: "Quintero, V Región, Chile", accent: "var(--yellow)" }
               ].map((item, i) => (
                 <div key={i} className="glass" style={{ padding: '2rem', borderRadius: '24px', borderLeft: `6px solid ${item.accent}` }}>
                   <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.8rem', textTransform: 'uppercase', opacity: 0.6, letterSpacing: '1px' }}>{item.label}</h4>
