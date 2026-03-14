@@ -60,7 +60,7 @@ export default function RootLayout({
           top: 0, 
           width: '100%',
           zIndex: 100, 
-          height: '85px',
+          height: '100px',
           display: 'flex',
           alignItems: 'center',
           backgroundColor: '#ffffff',
@@ -82,11 +82,11 @@ export default function RootLayout({
                 src="/assets/logo-sin-fundacion.png" 
                 alt="Logo Psicocupacional" 
                 style={{ 
-                  height: '240%', 
+                  height: '180%', 
                   width: 'auto', 
                   objectFit: 'contain',
                   position: 'absolute',
-                  top: '55%',
+                  top: '50%',
                   left: '0',
                   transform: 'translateY(-50%)',
                 }} 
@@ -141,7 +141,7 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main style={{ paddingTop: '90px' }}>
+        <main style={{ paddingTop: '100px' }}>
           {children}
         </main>
 
