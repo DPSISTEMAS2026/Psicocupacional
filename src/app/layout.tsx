@@ -74,16 +74,21 @@ export default function RootLayout({
               display: 'flex', 
               alignItems: 'center', 
               flexShrink: 0,
-              marginRight: '1rem'
+              marginRight: '3rem',
+              width: '320px',
+              position: 'relative'
             }}>
               <img 
                 src="/assets/logo-sin-fundacion.png" 
                 alt="Logo Psicocupacional" 
                 style={{ 
-                  height: '140%', 
+                  height: '240%', 
                   width: 'auto', 
                   objectFit: 'contain',
-                  transform: 'translateY(10px)',
+                  position: 'absolute',
+                  top: '55%',
+                  left: '0',
+                  transform: 'translateY(-50%)',
                 }} 
               />
             </a>
