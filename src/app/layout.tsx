@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const SmileyIcon = ({ color }: { color: string }) => (
-  <svg width="24" height="15" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: '2px' }}>
+  <svg width="20" height="12" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: '2px' }}>
     <circle cx="35" cy="20" r="10" fill={color} />
     <circle cx="65" cy="20" r="10" fill={color} />
     <path d="M20 40C20 40 35 55 50 55C65 55 80 40 80 40" stroke={color} strokeWidth="10" strokeLinecap="round" />
@@ -70,29 +70,26 @@ export default function RootLayout({
           <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
             {/* Logo grande restaurado */}
             <a href="/" style={{ 
-              height: '80px', 
-              width: '320px',
+              height: '85px', 
               display: 'flex', 
               alignItems: 'center', 
-              position: 'relative'
+              flexShrink: 0,
+              marginRight: '1rem'
             }}>
               <img 
                 src="/assets/29.png" 
                 alt="Logo Fundación Psicocupacional" 
                 style={{ 
-                  height: '280%', 
+                  height: '160%', 
                   width: 'auto', 
                   objectFit: 'contain',
-                  position: 'absolute',
-                  top: '55%',
-                  left: '42%',
-                  transform: 'translate(-50%, -50%)',
+                  transform: 'translateY(12px)',
                 }} 
               />
             </a>
             
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <nav style={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem', flex: 1, justifyContent: 'flex-end' }}>
+              <nav style={{ display: 'flex', gap: '0px', alignItems: 'center' }}>
                 {menuItems.map((item) => (
                   <div key={item.name} className="nav-item">
                     <a 
