@@ -77,13 +77,13 @@ export default function RootLayout({
               marginRight: '1rem'
             }}>
               <img 
-                src="/assets/29.png" 
-                alt="Logo Fundación Psicocupacional" 
+                src="/assets/logo-sin-fundacion.png" 
+                alt="Logo Psicocupacional" 
                 style={{ 
-                  height: '160%', 
+                  height: '140%', 
                   width: 'auto', 
                   objectFit: 'contain',
-                  transform: 'translateY(12px)',
+                  transform: 'translateY(10px)',
                 }} 
               />
             </a>
@@ -144,7 +144,7 @@ export default function RootLayout({
           <div className="container">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem', marginBottom: '4rem' }}>
               <div style={{ gridColumn: 'span 1.5' }}>
-                <img src="/assets/29.png" alt="Logo" style={{ height: '50px', marginBottom: '1.5rem' }} />
+                <img src="/assets/logo-sin-fundacion.png" alt="Logo" style={{ height: '60px', marginBottom: '1.5rem' }} />
                 <p style={{ opacity: 0.7, maxWidth: '300px', fontSize: '0.9rem' }}>
                   Habilidades para la vida, autonomía para participar y convivir. Transformando la mirada hacia la neurodiversidad.
                 </p>
