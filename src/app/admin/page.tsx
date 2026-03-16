@@ -46,6 +46,26 @@ export default function AdminDashboard() {
           redes: { instagram: "psicocupacional_", tiktok: "psicocupacional_" }
         };
 
+        const fallbackClub = {
+          qa: [
+            { title: "¿Qué es?", content: "El Club 12/17 es un espacio grupal dirigido a adolescentes neurodivergentes donde se trabajan habilidades para la vida diaria a través de experiencias prácticas y significativas." },
+            { title: "¿A quién está dirigido?", content: "Está dirigido a adolescentes entre 12 y 21 años, principalmente jóvenes dentro del espectro autista u otras condiciones del neurodesarrollo..." },
+            { title: "¿Qué hacemos?", content: "En cada sesión realizamos actividades reales que permiten aprender haciendo, como manejar dinero, comprar en el supermercado, cocinar..." }
+          ],
+          talles: [
+            { title: "Manejo de dinero", icon: "💰", desc: "Aprendemos a reconocer precios, comparar productos, pagar y administrar dinero en situaciones reales." },
+            { title: "Compras en la comunidad", icon: "🛒", desc: "Practicamos cómo comprar en supermercados, farmacias o locales del barrio..." },
+            { title: "Cocina para la vida diaria", icon: "🍳", desc: "Preparamos comidas simples y funcionales que ayudan a desarrollar autonomía en la vida cotidiana." }
+          ]
+        };
+
+        const fallbackContacto = {
+          whatsapp: "56912345678",
+          correo: "contacto@psicocupacional.cl",
+          instagram: "psicocupacional_",
+          tiktok: "psicocupacional_"
+        };
+
         const populated = {
           home: { 
             ...fallbackHome, 
@@ -54,10 +74,16 @@ export default function AdminDashboard() {
             galeriaMomentos: data.home?.galeriaMomentos?.length ? data.home.galeriaMomentos : fallbackHome.galeriaMomentos,
             redes: data.home?.redes ? { ...fallbackHome.redes, ...data.home.redes } : fallbackHome.redes
           },
-          club: { qa: data.club?.qa?.length ? data.club.qa : [], talles: data.club?.talles?.length ? data.club.talles : [] },
-          contacto: { ...config.contacto, ...data.contacto },
+          club: { 
+            qa: data.club?.qa?.length ? data.club.qa : fallbackClub.qa, 
+            talles: data.club?.talles?.length ? data.club.talles : fallbackClub.talles 
+          },
+          contacto: data.contacto?.correo ? { ...fallbackContacto, ...data.contacto } : fallbackContacto,
           videoHome: data.videoHome || '/assets/PSICOCUPACIONAL.mp4',
-          gallery: data.gallery || []
+          gallery: data.gallery && data.gallery.length ? data.gallery : [
+            "/assets/WhatsApp Video 2026-03-13 at 10.37.26 AM.mp4",
+            "/assets/club-logo-experiencias.png"
+          ]
         };
         setConfig(populated);
         setLoading(false);
@@ -334,25 +360,35 @@ export default function AdminDashboard() {
 
             {/* Tab CLUB */}
             {currentTab === 'club' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
                 <h3 style={{ color: 'var(--calipso)' }}>🤝 Sección Club 12/17</h3>
-                <p style={{ fontSize: '0.9rem', opacity: 0.7 }}>Modifica las preguntas y talleres de este programa.</p>
                 
-                <h4 style={{ color: '#475569', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>Preguntas y Respuestas (Q&A)</h4>
-                {config.club.qa.map((item: any, i: number) => (
-                  <div key={i} style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                    <input type="text" value={item.title} onChange={(e) => { const newQa = [...config.club.qa]; newQa[i].title = e.target.value; setConfig({ ...config, club: { ...config.club, qa: newQa } }); }} placeholder="Pregunta" style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', border: '1px solid #e2e8f0' }} />
-                    <textarea rows={3} value={item.content} onChange={(e) => { const newQa = [...config.club.qa]; newQa[i].content = e.target.value; setConfig({ ...config, club: { ...config.club, qa: newQa } }); }} placeholder="Respuesta" style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', border: '1px solid #e2e8f0', resize: 'none' }} />
+                <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid var(--calipso)', paddingLeft: '0.8rem' }}>Preguntas y Respuestas (Q&A)</h4>
+                {(config.club.qa || []).map((item: any, i: number) => (
+                  <div key={i} style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '0.8rem', backgroundColor: '#fff' }}>
+                    <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Pregunta / Título</label>
+                    <input type="text" value={item.title || ''} onChange={(e) => { const newQa = [...config.club.qa]; newQa[i].title = e.target.value; setConfig({ ...config, club: { ...config.club, qa: newQa } }); }} placeholder="Ej: ¿Qué hacemos?" style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+                    <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Respuesta / Contenido</label>
+                    <textarea rows={3} value={item.content || ''} onChange={(e) => { const newQa = [...config.club.qa]; newQa[i].content = e.target.value; setConfig({ ...config, club: { ...config.club, qa: newQa } }); }} placeholder="Detalle..." style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', border: '1px solid #cbd5e1', resize: 'vertical' }} />
                   </div>
                 ))}
 
-                <h4 style={{ color: '#475569', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem', marginTop: '1rem' }}>Talleres</h4>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.2rem' }}>
-                  {config.club.talles.map((taller: any, i: number) => (
-                    <div key={i} style={{ padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
-                      <input type="text" value={taller.icon} onChange={(e) => { const nt = [...config.club.talles]; nt[i].icon = e.target.value; setConfig({ ...config, club: { ...config.club, talles: nt } }); }} style={{ fontSize: '1.5rem', width: '45px', textAlign: 'center', marginBottom: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '8px' }} />
-                      <input type="text" value={taller.title} onChange={(e) => { const nt = [...config.club.talles]; nt[i].title = e.target.value; setConfig({ ...config, club: { ...config.club, talles: nt } }); }} placeholder="Título" style={{ width: '100%', padding: '0.5rem', border: 'none', fontWeight: 700, outline: 'none' }} />
-                      <textarea rows={3} value={taller.desc} onChange={(e) => { const nt = [...config.club.talles]; nt[i].desc = e.target.value; setConfig({ ...config, club: { ...config.club, talles: nt } }); }} placeholder="Descripción" style={{ width: '100%', padding: '0.5rem', border: 'none', fontSize: '0.9rem', outline: 'none', resize: 'none' }} />
+                <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid var(--yellow)', paddingLeft: '0.8rem', marginTop: '1rem' }}>Talleres</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                  {(config.club.talles || []).map((taller: any, i: number) => (
+                    <div key={i} style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '0.8rem', backgroundColor: '#fff' }}>
+                      <div style={{ display: 'flex', gap: '0.8rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                          <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Icono</label>
+                          <input type="text" value={taller.icon || ''} onChange={(e) => { const nt = [...config.club.talles]; nt[i].icon = e.target.value; setConfig({ ...config, club: { ...config.club, talles: nt } }); }} style={{ fontSize: '1.2rem', width: '60px', padding: '0.7rem', textAlign: 'center', border: '1px solid #cbd5e1', borderRadius: '12px' }} />
+                        </div>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                          <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Nombre del Taller</label>
+                          <input type="text" value={taller.title || ''} onChange={(e) => { const nt = [...config.club.talles]; nt[i].title = e.target.value; setConfig({ ...config, club: { ...config.club, talles: nt } }); }} placeholder="Título" style={{ width: '100%', padding: '0.8rem', border: '1px solid #cbd5e1', borderRadius: '12px', fontWeight: 700 }} />
+                        </div>
+                      </div>
+                      <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Descripción corta</label>
+                      <textarea rows={3} value={taller.desc || ''} onChange={(e) => { const nt = [...config.club.talles]; nt[i].desc = e.target.value; setConfig({ ...config, club: { ...config.club, talles: nt } }); }} placeholder="¿Qué se aprende?" style={{ width: '100%', padding: '0.8rem', border: '1px solid #cbd5e1', borderRadius: '12px', fontSize: '0.9rem', resize: 'vertical' }} />
                     </div>
                   ))}
                 </div>
@@ -363,17 +399,16 @@ export default function AdminDashboard() {
             {currentTab === 'contacto' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h3 style={{ color: 'var(--calipso)' }}>📍 Página de Contacto</h3>
-                <div>
-                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>WhatsApp (sin +)</label>
-                  <input type="text" value={config.contacto.whatsapp} onChange={(e) => setConfig({ ...config, contacto: { ...config.contacto, whatsapp: e.target.value } })} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }} />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>Correo Electrónico</label>
-                  <input type="email" value={config.contacto.correo} onChange={(e) => setConfig({ ...config, contacto: { ...config.contacto, correo: e.target.value } })} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }} />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>Instagram (@usuario)</label>
-                  <input type="text" value={config.contacto.instagram} onChange={(e) => setConfig({ ...config, contacto: { ...config.contacto, instagram: e.target.value } })} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }} />
+                
+                <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>💬 WhatsApp (Solo números)</label>
+                    <input type="text" value={config.contacto.whatsapp || ''} onChange={(e) => setConfig({ ...config, contacto: { ...config.contacto, whatsapp: e.target.value } })} placeholder="56912345678" style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>📧 Correo Electrónico</label>
+                    <input type="email" value={config.contacto.correo || ''} onChange={(e) => setConfig({ ...config, contacto: { ...config.contacto, correo: e.target.value } })} placeholder="contacto@ejemplo.com" style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+                  </div>
                 </div>
               </div>
             )}
