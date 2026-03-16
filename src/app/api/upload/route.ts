@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { supabase } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
@@ -14,21 +13,30 @@ export async function POST(request: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Save into /public/assets/ path
-    const dirPath = path.join(process.cwd(), 'public', 'assets');
-    const filePath = path.join(dirPath, file.name);
+    // Limpiamos el nombre del archivo para evitar espacios y caracteres extraños
+    const cleanName = file.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_.-]/g, '');
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('gallery')
+      .upload(cleanName, buffer, {
+        contentType: file.type,
+        upsert: true
+      });
 
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
+    if (uploadError) {
+      return NextResponse.json({ success: false, message: uploadError.message });
     }
 
-    fs.writeFileSync(filePath, buffer);
+    // Obtenemos la URL pública del archivo subido
+    const { data: publicUrlData } = supabase.storage
+      .from('gallery')
+      .getPublicUrl(cleanName);
 
     return NextResponse.json({ 
       success: true, 
-      message: 'Archivo subido correctamente!', 
-      url: `/assets/${file.name}` 
+      message: 'Archivo subido correctamente a Supabase!', 
+      url: publicUrlData.publicUrl 
     });
+    
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message });
   }
