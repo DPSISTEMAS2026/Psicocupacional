@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Fundación Psicocupacional | Neurodiversidad y Habilidades para la Vida",
+  title: "Psicocupacional | Neurodiversidad y Habilidades para la Vida",
   description: "Promovemos el desarrollo de habilidades para la vida en personas neurodivergentes, favoreciendo su autonomía, participación social y bienestar.",
 };
 
@@ -18,7 +18,6 @@ interface MenuItem {
   name: string;
   path: string;
   color: string;
-  children?: { name: string; path: string }[];
 }
 
 export default function RootLayout({
@@ -27,29 +26,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const menuItems: MenuItem[] = [
-    { name: "Inicio", path: "/", color: "var(--calipso)" },
-    { 
-      name: "Quiénes Somos", 
-      path: "/nosotros", 
-      color: "var(--magenta)",
-      children: [
-        { name: "Nuestra Historia", path: "/nosotros#historia" },
-        { name: "Misión y Visión", path: "/nosotros#mision" },
-        { name: "Directorio", path: "/nosotros#directorio" },
-      ]
-    },
-    { 
-      name: "12/17 Actividades", 
-      path: "/club-12-17", 
-      color: "var(--yellow)",
-      children: [
-        { name: "Calendario", path: "/club-12-17#calendario" },
-        { name: "Inscripciones", path: "/club-12-17#inscripciones" },
-      ]
-    },
-    { name: "Noticias", path: "/noticias", color: "var(--calipso)" },
-    { name: "Material Descargable", path: "/material", color: "var(--magenta)" },
-    { name: "Contacto", path: "/contacto", color: "var(--yellow)" },
+    { name: "Qué hacemos", path: "/", color: "var(--calipso)" },
+    { name: "Programa Club 12/17", path: "/club-12-17", color: "var(--yellow)" },
+    { name: "Contacto", path: "/contacto", color: "var(--magenta)" },
   ];
 
   return (
@@ -106,18 +85,7 @@ export default function RootLayout({
                     >
                       <SmileyIcon color={item.color} />
                       <span>{item.name}</span>
-                      {item.children && <span style={{ fontSize: '0.6rem', marginLeft: '5px', opacity: 0.5 }}>▼</span>}
                     </a>
-                    
-                    {item.children && (
-                      <div className="submenu-premium">
-                        {item.children.map((sub) => (
-                          <a key={sub.name} href={sub.path} className="submenu-link-premium">
-                            {sub.name}
-                          </a>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 ))}
               </nav>
@@ -149,25 +117,17 @@ export default function RootLayout({
           <div className="container">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem', marginBottom: '4rem' }}>
               <div style={{ gridColumn: 'span 1.5' }}>
-                <img src="/assets/logo-sin-fundacion.png" alt="Logo" style={{ height: '60px', marginBottom: '1.5rem' }} />
+                <img src="/assets/logo-sin-fundacion.png" alt="Logo" style={{ height: '100px', marginBottom: '1.5rem', filter: 'brightness(1)' }} />
                 <p style={{ opacity: 0.7, maxWidth: '300px', fontSize: '0.9rem' }}>
                   Habilidades para la vida, autonomía para participar y convivir. Transformando la mirada hacia la neurodiversidad.
                 </p>
               </div>
               <div>
-                <h4 style={{ marginBottom: '1.5rem', fontSize: '1rem', color: 'var(--calipso)' }}>Transparencia</h4>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.9rem' }}>
-                  <li><a href="/transparencia/estatutos" style={{ opacity: 0.7 }}>Estatutos</a></li>
-                  <li><a href="/transparencia/directorio" style={{ opacity: 0.7 }}>Directorio</a></li>
-                  <li><a href="/transparencia/memorias" style={{ opacity: 0.7 }}>Memorias Anuales</a></li>
-                </ul>
-              </div>
-              <div>
                 <h4 style={{ marginBottom: '1.5rem', fontSize: '1rem', color: 'var(--calipso)' }}>Institucional</h4>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.9rem' }}>
-                  <li><a href="/nosotros" style={{ opacity: 0.7 }}>Quiénes Somos</a></li>
-                  <li><a href="/material" style={{ opacity: 0.7 }}>Material Descargable</a></li>
-                  <li><a href="/noticias" style={{ opacity: 0.7 }}>Noticias</a></li>
+                  <li><a href="/" style={{ opacity: 0.7 }}>Qué hacemos</a></li>
+                  <li><a href="/club-12-17" style={{ opacity: 0.7 }}>Programa Club 12/17</a></li>
+                  <li><a href="/contacto" style={{ opacity: 0.7 }}>Contacto</a></li>
                 </ul>
               </div>
               <div>
@@ -177,7 +137,7 @@ export default function RootLayout({
               </div>
             </div>
             <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '2rem', textAlign: 'center' }}>
-              <p style={{ opacity: 0.4, fontSize: '0.8rem' }}>&copy; {new Date().getFullYear()} Fundación Psicocupacional para la Neurodiversidad. Todos los derechos reservados.</p>
+              <p style={{ opacity: 0.4, fontSize: '0.8rem' }}>&copy; {new Date().getFullYear()} Psicocupacional. Todos los derechos reservados.</p>
             </div>
           </div>
         </footer>

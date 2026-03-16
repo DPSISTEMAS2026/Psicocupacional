@@ -21,7 +21,7 @@
   
   --nav-bg: rgba(255, 255, 255, 0.8);
   
-  --gradient-primary: linear-gradient(135deg, var(--calipso) 0%, var(--magenta) 100%);
+  --gradient-primary: var(--calipso);
   --shadow-premium: 0 20px 50px -12px rgba(0, 0, 0, 0.1);
 }
 
@@ -423,7 +423,7 @@ section {
 }
 
 .follow-banner {
-  background: linear-gradient(135deg, var(--calipso), var(--magenta));
+  background: var(--calipso);
   color: white;
   padding: 4rem;
   border-radius: 48px;

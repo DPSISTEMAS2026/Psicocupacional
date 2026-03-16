@@ -30,14 +30,11 @@ export default function Home() {
         <div className="container">
           <div className="grid-2" style={{ alignItems: 'center', gap: '4rem' }}>
             <div style={{ position: 'relative', borderRadius: '48px', overflow: 'hidden', boxShadow: '0 30px 60px rgba(0,0,0,0.1)' }}>
-              <img src="/assets/28.png" alt="Actividad Fundación" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <img src="/assets/1.png" alt="Logo Psicocupacional" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <div style={{ textAlign: 'left' }}>
-              <div className="animate-hero-logo" style={{ marginBottom: '2rem' }}>
-                <img src="/assets/29.png" alt="Logo Fundación" style={{ height: '100px', width: 'auto' }} />
-              </div>
               <h1 style={{ fontSize: '2.8rem', marginBottom: '1.5rem', color: 'var(--foreground)' }}>
-                Fundación Psicocupacional
+                Psicocupacional
               </h1>
               <p style={{ 
                 fontSize: '1.4rem', 
@@ -57,8 +54,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Presentación e Identidad */}
-      <section id="nosotros" style={{ backgroundColor: '#fcfcfc', overflow: 'hidden', borderTop: '1px solid #f0f3f6' }}>
+      {/* Quiénes Somos */}
+      <section id="quienes-somos" style={{ backgroundColor: '#fcfcfc', overflow: 'hidden', borderTop: '1px solid #f0f3f6' }}>
         <div className="blob-container">
           <img src={blobs[0].src} className={`blob ${blobs[0].class}`} alt="" />
           <img src={blobs[1].src} className={`blob ${blobs[1].class}`} alt="" />
@@ -67,7 +64,7 @@ export default function Home() {
         <div className="container">
           <div className="grid-2" style={{ alignItems: 'center', gap: '5rem', marginBottom: '6rem' }}>
             <div>
-              <h2 style={{ fontSize: '3rem', color: 'var(--calipso)', marginBottom: '2rem' }}>Nuestra Identidad</h2>
+              <h2 style={{ fontSize: '3rem', color: 'var(--calipso)', marginBottom: '2rem' }}>Quiénes Somos</h2>
               <p style={{ fontSize: '1.2rem', marginBottom: '1.5rem', lineHeight: '1.8', opacity: 0.8 }}>
                 <strong>Psicocupacional</strong> es una iniciativa orientada a promover el desarrollo de habilidades para la vida en personas neurodivergentes, a través de espacios de aprendizaje, interacción social y experiencias prácticas en la comunidad.
               </p>
@@ -95,123 +92,16 @@ export default function Home() {
               </p>
             </div>
           </div>
-          
-          <div style={{ marginTop: '5rem', textAlign: 'center' }}>
-            <h3 style={{ fontSize: '2rem', marginBottom: '3.5rem', fontWeight: 700 }}>Nuestros Valores Guía</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-              {[
-                { title: "Respeto", desc: "Valorar las distintas formas de pensar y aprender.", color: "var(--calipso)" },
-                { title: "Autonomía", desc: "Desarrollo progresivo de la independencia cotidiana.", color: "var(--yellow)" },
-                { title: "Inclusión", desc: "Fomentar la participación activa en la comunidad.", color: "var(--magenta)" },
-                { title: "Colaboración", desc: "Trabajo conjunto con familias e instituciones.", color: "var(--calipso)" },
-                { title: "Aprendizaje", desc: "Experiencias prácticas con sentido para la vida.", color: "var(--magenta)" }
-              ].map((val, i) => (
-                <div key={i} className="glass hover-glow" style={{ padding: '2.5rem 2rem', borderRadius: '32px', textAlign: 'center', backgroundColor: '#fff' }}>
-                  <div style={{ width: '40px', height: '4px', background: val.color, margin: '0 auto 1.5rem', borderRadius: '2px' }}></div>
-                  <h4 style={{ color: val.color, marginBottom: '0.8rem', fontSize: '1.3rem', fontWeight: 700 }}>{val.title}</h4>
-                  <p style={{ fontSize: '0.95rem', opacity: 0.7, lineHeight: '1.5' }}>{val.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Programas y Actividades - Lo que Hacemos */}
-      <section id="actividades" style={{ backgroundColor: '#fff', padding: '8rem 0' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
-            <h2 style={{ fontSize: '3.2rem', color: 'var(--foreground)', marginBottom: '1.5rem', fontWeight: 800 }}>Programas de Apoyo</h2>
-            <p style={{ fontSize: '1.2rem', opacity: 0.6, maxWidth: '700px', margin: '0 auto' }}>
-              Líneas de acción diseñadas para el fortalecimiento de la autonomía y la participación social.
-            </p>
-          </div>
 
-          <div className="grid-3" style={{ gap: '2.5rem' }}>
-            {[
-              { 
-                title: "Habilidades Sociales", 
-                desc: "Dinámicas grupales para la comunicación, convivencia entre pares y construcción de vínculos significativos.",
-                icon: "🤝",
-                color: "var(--calipso)"
-              },
-              { 
-                title: "Autonomía Cotidiana", 
-                desc: "Talleres prácticos: manejo de dinero, identificación de precios, compras simples y toma de decisiones.",
-                icon: "🏠",
-                color: "var(--yellow)"
-              },
-              { 
-                title: "Participación Comunitaria", 
-                desc: "Salidas reales a espacios públicos, uso de transporte y desplazamientos urbanos supervisados.",
-                icon: "🏙️",
-                color: "var(--magenta)"
-              }
-            ].map((activity, i) => (
-              <div key={i} className="glass hover-glow" style={{ padding: '4rem 3rem', borderRadius: '40px', backgroundColor: '#fff', textAlign: 'center' }}>
-                <div style={{ fontSize: '4rem', marginBottom: '2rem', display: 'block' }}>{activity.icon}</div>
-                <h3 style={{ fontSize: '1.80rem', marginBottom: '1.2rem', color: activity.color, fontWeight: 700 }}>{activity.title}</h3>
-                <p style={{ fontSize: '1.1rem', opacity: 0.7, lineHeight: '1.7' }}>{activity.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Modelo de Intervención (Pilares) */}
-      <section style={{ backgroundColor: '#0f172a', color: 'white' }}>
-        <div className="container">
-          <div className="grid-2" style={{ alignItems: 'center', gap: '5rem' }}>
-            <div style={{ position: 'relative' }}>
-              <div style={{ 
-                position: 'absolute', 
-                top: '-20px', 
-                left: '-20px', 
-                width: '100px', 
-                height: '100px', 
-                background: 'var(--calipso)', 
-                opacity: 0.2, 
-                borderRadius: '50%',
-                filter: 'blur(30px)'
-              }}></div>
-              <h2 style={{ fontSize: '3.5rem', marginBottom: '2rem', lineHeight: '1.1' }}>
-                Nuestro Modelo de <span style={{ color: 'var(--calipso)' }}>Intervención</span>
-              </h2>
-              <p style={{ fontSize: '1.2rem', opacity: 0.7, marginBottom: '3rem', lineHeight: '1.8' }}>
-                Nos basamos en el desarrollo de habilidades mediante experiencias prácticas y significativas en contextos reales.
-              </p>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                {[
-                  "Aprendizaje Experiencial y Práctico",
-                  "Enfoque en Trabajo Grupal y Pares",
-                  "Acompañamiento Profesional Especializado",
-                  "Intervención en Contextos Comunitarios Reales",
-                  "Participación y Acompañamiento de Familias"
-                ].map((pilar, i) => (
-                  <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '1.1rem' }}>
-                    <span style={{ color: 'var(--calipso)', fontSize: '1.5rem' }}>✓</span> {pilar}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div style={{ position: 'relative', height: '500px', borderRadius: '48px', overflow: 'hidden' }}>
-              <img src="/assets/28.png" alt="Acompañamiento" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, #0f172a, transparent)' }}></div>
-              <div style={{ position: 'absolute', bottom: '3rem', left: '3rem', right: '3rem' }}>
-                <p style={{ fontStyle: 'italic', fontSize: '1.1rem', opacity: 0.9 }}>
-                  "Buscamos que cada aprendizaje tenga sentido en la vida cotidiana de nuestros participantes."
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-       {/* Equipo Profesional */}
-      <section id="equipo" style={{ backgroundColor: '#fff' }}>
+       {/* Los Monitores */}
+      <section id="monitores" style={{ backgroundColor: '#fff' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 style={{ fontSize: '3rem', marginBottom: '1.2rem', color: 'var(--foreground)' }}>Nuestro Equipo</h2>
+            <h2 style={{ fontSize: '3rem', marginBottom: '1.2rem', color: 'var(--foreground)' }}>Los Monitores</h2>
             <p style={{ fontSize: '1.2rem', opacity: 0.7, maxWidth: '800px', margin: '0 auto' }}>
               Profesionales comprometidos con el desarrollo integral y la calidez humana.
             </p>
@@ -230,7 +120,7 @@ export default function Home() {
                 name: "Edgardo Pino E.",
                 role: "Psicólogo", 
                 image: "/assets/edgardo.jpg",
-                desc: "Certificado en modelo SCERTS. Especialista en evaluación e intervención a población infantil, juvenil y adultos.",
+                desc: "Certificado en el modelo SCERTS, especialista en evaluación e intervención con población infanto-juvenil. Cuenta con más de 10 años de experiencia en el trabajo con personas neurodivergentes, promoviendo el desarrollo de habilidades para la vida, la autonomía y la participación social.",
                 accent: "var(--calipso)"
               }
             ].map((prof, i) => (
@@ -267,11 +157,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Comunidad y Redes Sociales */}
-      <section id="comunidad" style={{ backgroundColor: '#f8fafc' }}>
+      {/* Testimonios y Comentarios */}
+      <section id="testimonios" style={{ backgroundColor: '#f8fafc' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 style={{ fontSize: '3rem', color: 'var(--calipso)', marginBottom: '1.5rem' }}>Nuestra Comunidad</h2>
+            <h2 style={{ fontSize: '3rem', color: 'var(--calipso)', marginBottom: '1.5rem' }}>Testimonios y Comentarios</h2>
             <p style={{ fontSize: '1.2rem', opacity: 0.6 }}>Vive nuestro día a día a través de nuestras redes sociales.</p>
           </div>
 
