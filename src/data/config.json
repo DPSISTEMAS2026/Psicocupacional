@@ -1,0 +1,73 @@
+{
+  "home": {
+    "heroTitle": "Psicocupacional",
+    "heroSlogan": "Habilidades para la vida, autonomía para participar y convivir.",
+    "aboutImage": "/assets/1.png",
+    "aboutText": "Psicocupacional es una iniciativa orientada a promover el desarrollo de habilidades para la vida en personas neurodivergentes, a través de espacios de aprendizaje, interacción social y experiencias prácticas en la comunidad.",
+    "mision": "Promover el desarrollo de habilidades para la vida en personas neurodivergentes mediante espacios de aprendizaje, interacción social y experiencias prácticas que favorezcan su autonomía...",
+    "vision": "Ser un espacio de referencia en el desarrollo de habilidades para la vida en personas neurodivergentes, promoviendo oportunidades de participación, autonomía y bienestar...",
+    "monitores": [
+      {
+        "name": "Rocío Jerez U.",
+        "text": "Diplomada en inclusión social y educativa para personas con la condición del Espectro Autista. Especialista en autonomía y participación.",
+        "image": "/assets/rocio.jpg"
+      },
+      {
+        "name": "Edgardo Pino E.",
+        "text": "Certificado en el modelo SCERTS, especialista en evaluación e intervención con población infanto-juvenil. Cuenta con más de 10 años de experiencia...",
+        "image": "/assets/edgardo.jpg"
+      }
+    ],
+    "galeriaMomentos": [
+      "/assets/WhatsApp Video 2026-03-13 at 10.37.14 AM.mp4",
+      "/assets/WhatsApp Video 2026-03-13 at 10.37.19 AM.mp4"
+    ],
+    "redes": {
+      "instagram": "psicocupacional_",
+      "tiktok": "psicocupacional_"
+    }
+  },
+  "club": {
+    "qa": [
+      {
+        "title": "¿Qué es?",
+        "content": "El Club 12/17 es un espacio grupal dirigido a adolescentes neurodivergentes donde se trabajan habilidades para la vida diaria a través de experiencias prácticas y significativas."
+      },
+      {
+        "title": "¿A quién está dirigido?",
+        "content": "Está dirigido a adolescentes entre 12 y 21 años, principalmente jóvenes dentro del espectro autista u otras condiciones del neurodesarrollo..."
+      },
+      {
+        "title": "¿Qué hacemos?",
+        "content": "En cada sesión realizamos actividades reales que permiten aprender haciendo, como manejar dinero, comprar en el supermercado, cocinar..."
+      }
+    ],
+    "talles": [
+      {
+        "title": "Manejo de dinero",
+        "icon": "💰",
+        "desc": "Aprendemos a reconocer precios, comparar productos, pagar y administrar dinero en situaciones reales."
+      },
+      {
+        "title": "Compras en la comunidad",
+        "icon": "🛒",
+        "desc": "Practicamos cómo comprar en supermercados, farmacias o locales del barrio..."
+      },
+      {
+        "title": "Cocina para la vida diaria",
+        "icon": "🍳",
+        "desc": "Preparamos comidas simples y funcionales que ayudan a desarrollar autonomía en la vida cotidiana."
+      }
+    ]
+  },
+  "contacto": {
+    "whatsapp": "56912345678",
+    "correo": "contacto@psicocupacional.cl",
+    "instagram": "psicocupacional_",
+    "tiktok": "psicocupacional_"
+  },
+  "videoHome": "/assets/PSICOCUPACIONAL.mp4",
+  "gallery": [
+    "/assets/WhatsApp Video 2026-03-13 at 10.37.26 AM.mp4"
+  ]
+}

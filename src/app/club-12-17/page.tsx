@@ -3,48 +3,40 @@
 import { useState, useEffect } from 'react';
 
 export default function Club() {
+  const [config, setConfig] = useState<any>(null);
   const [gallery, setGallery] = useState<string[]>([
     "/assets/WhatsApp Video 2026-03-13 at 10.37.26 AM.mp4",
-    "/assets/club-logo-experiencias.png",
-    "/assets/WhatsApp Video 2026-03-13 at 10.37.16 AM.mp4"
+    "/assets/club-logo-experiencias.png"
   ]);
 
   useEffect(() => {
     fetch('/api/config')
       .then(res => res.json())
       .then(data => {
-        if (data.gallery && data.gallery.length > 0) {
-          setGallery(data.gallery);
+        if (data) {
+          setConfig(data);
+          if (data.gallery && data.gallery.length > 0) {
+            setGallery(data.gallery);
+          }
         }
       });
   }, []);
 
-  const sections = [
-    {
-      title: "¿Qué es?",
-      content: "El Club 12/17 es un espacio grupal dirigido a adolescentes neurodivergentes donde se trabajan habilidades para la vida diaria a través de experiencias prácticas y significativas."
-    },
-    {
-      title: "¿A quién está dirigido?",
-      content: "Está dirigido a adolescentes entre 12 y 21 años, principalmente jóvenes dentro del espectro autista u otras condiciones del neurodesarrollo, que buscan fortalecer su autonomía, habilidades sociales y participación en la comunidad."
-    },
-    {
-      title: "¿Qué hacemos?",
-      content: "En cada sesión realizamos actividades reales que permiten aprender haciendo, como manejar dinero, comprar en el supermercado, cocinar, desplazarnos por la ciudad, planificar salidas y compartir con otros en un espacio de amistad y convivencia."
-    },
-    {
-      title: "¿Para qué sirve?",
-      content: "El objetivo del club es fortalecer la autonomía, independencia, la socialización y la participación en la comunidad, ayudando a que los adolescentes desarrollen mayor seguridad e independencia en su vida cotidiana."
-    }
+  const defaultSections = [
+    { title: "¿Qué es?", content: "El Club 12/17 es un espacio grupal dirigido a adolescentes neurodivergentes donde se trabajan habilidades para la vida diaria a través de experiencias prácticas y significativas." },
+    { title: "¿A quién está dirigido?", content: "Está dirigido a adolescentes entre 12 y 21 años, principalmente jóvenes dentro del espectro autista u otras condiciones del neurodesarrollo..." },
+    { title: "¿Qué hacemos?", content: "En cada sesión realizamos actividades reales que permiten aprender haciendo, como manejar dinero, comprar en el supermercado, cocinar..." }
   ];
 
-  const talles = [
+  const defaultTalles = [
     { title: "Manejo de dinero", icon: "💰", desc: "Aprendemos a reconocer precios, comparar productos, pagar y administrar dinero en situaciones reales." },
-    { title: "Compras en la comunidad", icon: "🛒", desc: "Practicamos cómo comprar en supermercados, farmacias o locales del barrio, saludando, preguntando y tomando decisiones." },
-    { title: "Cocina para la vida diaria", icon: "🍳", desc: "Preparamos comidas simples y funcionales que ayudan a desarrollar autonomía en la vida cotidiana." },
-    { title: "Movilidad en la ciudad", icon: "🚌", desc: "Aprendemos a desplazarnos por la comunidad, identificar recorridos y utilizar transporte público de forma segura." },
-    { title: "Club de amigos", icon: "🤝", desc: "Realizamos actividades para compartir, conversar, jugar y fortalecer la amistad y el compañerismo." }
+    { title: "Compras en la comunidad", icon: "🛒", desc: "Practicamos cómo comprar en supermercados... " },
+    { title: "Cocina para la vida diaria", icon: "🍳", desc: "Preparamos comidas simples y funcionales..." }
   ];
+
+  const sections = config?.club?.qa?.length ? config.club.qa : defaultSections;
+  const talles = config?.club?.talles?.length ? config.club.talles : defaultTalles;
+  const clubBanner = config?.club?.banner || "/assets/banner-12-17.png";
 
   return (
     <div className="animate-fade-in">

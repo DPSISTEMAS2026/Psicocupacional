@@ -1,4 +1,27 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+
 export default function Contacto() {
+  const [config, setConfig] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/config')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.contacto) {
+          setConfig(data.contacto);
+        }
+      });
+  }, []);
+
+  const contacto = config || {
+    whatsapp: "56912345678",
+    correo: "contacto@psicocupacional.cl",
+    instagram: "psicocupacional_",
+    tiktok: "psicocupacional_"
+  };
+
   return (
     <div className="animate-fade-in">
       <section style={{ 
@@ -29,13 +52,13 @@ export default function Contacto() {
 
                 <div className="glass" style={{ padding: '1.5rem', borderRadius: '24px', borderLeft: '6px solid var(--magenta)', backgroundColor: '#fff' }}>
                   <h4 style={{ opacity: 0.5, fontSize: '0.8rem', textTransform: 'uppercase' }}>Correo Electrónico</h4>
-                  <p style={{ fontWeight: 700, fontSize: '1.2rem' }}>📧 contacto@psicocupacional.cl</p>
+                  <p style={{ fontWeight: 700, fontSize: '1.2rem' }}>📧 {contacto.correo}</p>
                 </div>
               </div>
 
               {/* Botón WhatsApp */}
               <a 
-                href="https://wa.me/56912345678" 
+                href={`https://wa.me/${contacto.whatsapp}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn hover-glow" 
@@ -60,8 +83,8 @@ export default function Contacto() {
 
               {/* Redes Sociales */}
               <div style={{ display: 'flex', gap: '1rem' }}>
-                <a href="https://instagram.com/psicocupacional_" target="_blank" rel="noopener noreferrer" className="btn" style={{ flex: 1, textAlign: 'center', background: '#e1306c', color: 'white', fontWeight: 600, padding: '1rem', borderRadius: '16px' }}>Instagram</a>
-                <a href="https://tiktok.com/@psicocupacional_" target="_blank" rel="noopener noreferrer" className="btn" style={{ flex: 1, textAlign: 'center', background: '#000', color: 'white', fontWeight: 600, padding: '1rem', borderRadius: '16px' }}>TikTok</a>
+                <a href={`https://instagram.com/${contacto.instagram}`} target="_blank" rel="noopener noreferrer" className="btn" style={{ flex: 1, textAlign: 'center', background: '#e1306c', color: 'white', fontWeight: 600, padding: '1rem', borderRadius: '16px' }}>Instagram</a>
+                <a href={`https://tiktok.com/@${contacto.tiktok}`} target="_blank" rel="noopener noreferrer" className="btn" style={{ flex: 1, textAlign: 'center', background: '#000', color: 'white', fontWeight: 600, padding: '1rem', borderRadius: '16px' }}>TikTok</a>
               </div>
             </div>
 

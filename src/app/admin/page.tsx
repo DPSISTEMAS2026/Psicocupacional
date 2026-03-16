@@ -194,9 +194,9 @@ export default function AdminDashboard() {
 
         {/* Pestanas */}
         <div style={{ display: 'flex', gap: '0.8rem', borderBottom: '2px solid #f1f5f9', paddingBottom: '1rem', marginBottom: '2rem', overflowX: 'auto' }}>
-          {['inicio', 'club', 'contacto', 'galeria', 'archivos'].map(tab => (
+          {['inicio', 'club', 'contacto'].map(tab => (
             <button key={tab} onClick={() => setCurrentTab(tab)} style={{ background: currentTab === tab ? 'var(--calipso)' : '#f1f5f9', color: currentTab === tab ? 'white' : '#475569', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '16px', fontWeight: 700, cursor: 'pointer', textTransform: 'capitalize' }}>
-              {tab === 'galeria' ? 'Video y Slider' : tab === 'inicio' ? 'Qué Hacemos' : tab}
+              {tab === 'inicio' ? 'Qué Hacemos' : tab}
             </button>
           ))}
         </div>
@@ -347,7 +347,16 @@ export default function AdminDashboard() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
                 <h3 style={{ color: 'var(--calipso)' }}>🤝 Sección Club 12/17</h3>
 
-                <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid var(--calipso)', paddingLeft: '0.8rem' }}>Preguntas y Respuestas (Q&A)</h4>
+                <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid var(--magenta)', paddingLeft: '0.8rem', marginTop: '1rem' }}>🖼️ Banner de Portada</h4>
+                <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#64748b' }}>Recomendado: 1920x350 o similar (PNG / JPG / WEBP)</label>
+                  <div style={{ display: 'flex', gap: '0.8rem' }}>
+                    <input type="text" value={config.club.banner || '/assets/banner-12-17.png'} onChange={(e) => setConfig({ ...config, club: { ...config.club, banner: e.target.value } })} style={{ flex: 1, padding: '0.8rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+                    <button onClick={() => alert('Usa la pestaña "Archivos" para subir y copia la ruta aquí.')} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0.8rem', borderRadius: '12px', cursor: 'pointer', fontWeight: 600 }}>Subir</button>
+                  </div>
+                </div>
+
+                <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid var(--calipso)', paddingLeft: '0.8rem', marginTop: '1rem' }}>Preguntas y Respuestas (Q&A)</h4>
                 {(config.club.qa || []).map((item: any, i: number) => (
                   <div key={i} style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '0.8rem', backgroundColor: '#fff' }}>
                     <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Pregunta / Título</label>
@@ -375,6 +384,18 @@ export default function AdminDashboard() {
                       <textarea rows={3} value={taller.desc || ''} onChange={(e) => { const nt = [...config.club.talles]; nt[i].desc = e.target.value; setConfig({ ...config, club: { ...config.club, talles: nt } }); }} placeholder="¿Qué se aprende?" style={{ width: '100%', padding: '0.8rem', border: '1px solid #cbd5e1', borderRadius: '12px', fontSize: '0.9rem', resize: 'vertical' }} />
                     </div>
                   ))}
+                </div>
+
+                <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid #cbd5e1', paddingLeft: '0.8rem', marginTop: '1rem' }}>🎥 Galería de los Talleres</h4>
+                <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                  <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#64748b' }}>Videos (.mp4) o Imágenes (1:1 o 3:4 recommended)</label>
+                  {(config.gallery || []).map((it: string, idx: number) => (
+                    <div key={idx} style={{ display: 'flex', gap: '0.6rem' }}>
+                      <input type="text" value={it || ''} onChange={(e) => { const ng = [...config.gallery]; ng[idx] = e.target.value; setConfig({ ...config, gallery: ng }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+                      <button onClick={() => setConfig({ ...config, gallery: config.gallery.filter((_: any, i: number) => i !== idx) })} style={{ background: '#ff4d4f', color: 'white', border: 'none', borderRadius: '12px', padding: '0 0.8rem', cursor: 'pointer' }}>Eliminar</button>
+                    </div>
+                  ))}
+                  <button onClick={() => setConfig({ ...config, gallery: [...(config.gallery || []), ''] })} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0.8rem', borderRadius: '12px', fontWeight: 700, cursor: 'pointer' }}>+ Añadir Elemento</button>
                 </div>
               </div>
             )}
