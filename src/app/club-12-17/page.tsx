@@ -58,7 +58,7 @@ export default function Club() {
           <div className="grid-2" style={{ alignItems: 'flex-start', gap: '3rem', marginBottom: '5rem' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
               <h2 style={{ fontSize: '2.8rem', color: 'var(--calipso)', marginBottom: '1rem' }}>Sobre el Club 12/17</h2>
-              {sections.map((item, index) => (
+              {sections.map((item: any, index: number) => (
                 <div key={index} style={{ paddingBottom: '1.5rem', borderBottom: '1px solid #f1f5f9' }}>
                   <h3 style={{ fontSize: '1.4rem', color: 'var(--foreground)', marginBottom: '0.6rem', fontWeight: 700 }}>{item.title}</h3>
                   <p style={{ fontSize: '1.1rem', opacity: 0.8, lineHeight: 1.6 }}>{item.content}</p>
@@ -79,7 +79,7 @@ export default function Club() {
           <div style={{ marginTop: '5rem', marginBottom: '5rem' }}>
             <h2 style={{ fontSize: '2.8rem', color: 'var(--foreground)', marginBottom: '3rem', textAlign: 'center', fontWeight: 800 }}>Talleres que tenemos</h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center' }}>
-              {talles.map((taller, i) => (
+              {talles.map((taller: any, i: number) => (
                 <div key={i} className="glass hover-glow" style={{ 
                   flex: '1 1 300px', 
                   maxWidth: '360px', 
@@ -128,8 +128,8 @@ export default function Club() {
             msOverflowStyle: 'none',
             padding: '1rem'
           }}>
-            {gallery.map((media_src, i) => {
-              const isVideo = media_src.toLowerCase().endsWith('.mp4');
+            {gallery.map((media_src: any, i: number) => {
+              const isVideo = String(media_src).toLowerCase().endsWith('.mp4');
               return (
                 <div key={i} className="glass hover-glow" style={{ flex: '0 0 calc(33.333% - 1rem)', minWidth: '320px', scrollSnapAlign: 'start', borderRadius: '32px', overflow: 'hidden', height: '480px', backgroundColor: '#000' }}>
                   {isVideo ? (

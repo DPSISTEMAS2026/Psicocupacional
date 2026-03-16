@@ -369,7 +369,16 @@ export default function AdminDashboard() {
                 <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid var(--yellow)', paddingLeft: '0.8rem', marginTop: '1rem' }}>Talleres</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                   {(config.club.talles || []).map((taller: any, i: number) => (
-                    <div key={i} style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '0.8rem', backgroundColor: '#fff' }}>
+                    <div key={i} style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '0.8rem', backgroundColor: '#fff', position: 'relative' }}>
+                      
+                      {/* Botón Eliminar */}
+                      <button 
+                        onClick={() => { const nt = config.club.talles.filter((_: any, idx: number) => idx !== i); setConfig({ ...config, club: { ...config.club, talles: nt } }); }} 
+                        style={{ position: 'absolute', top: '15px', right: '15px', background: '#fee2e2', color: '#ef4444', border: '1px solid #fecaca', borderRadius: '8px', padding: '0.4rem 0.8rem', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600 }}
+                      >
+                        Eliminar
+                      </button>
+
                       <div style={{ display: 'flex', gap: '0.8rem' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                           <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>Icono</label>
@@ -384,18 +393,77 @@ export default function AdminDashboard() {
                       <textarea rows={3} value={taller.desc || ''} onChange={(e) => { const nt = [...config.club.talles]; nt[i].desc = e.target.value; setConfig({ ...config, club: { ...config.club, talles: nt } }); }} placeholder="¿Qué se aprende?" style={{ width: '100%', padding: '0.8rem', border: '1px solid #cbd5e1', borderRadius: '12px', fontSize: '0.9rem', resize: 'vertical' }} />
                     </div>
                   ))}
+
+                  {/* Botón Añadir Taller */}
+                  <button 
+                    onClick={() => { const nt = [...(config.club.talles || [])]; nt.push({ icon: '💡', title: '', desc: '' }); setConfig({ ...config, club: { ...config.club, talles: nt } }); }} 
+                    style={{ background: '#f8fafc', border: '2px dashed #cbd5e1', padding: '1.2rem', borderRadius: '16px', fontWeight: 700, cursor: 'pointer', color: '#64748b', textAlign: 'center' }}
+                  >
+                    + Añadir Nuevo Taller
+                  </button>
                 </div>
 
-                <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid #cbd5e1', paddingLeft: '0.8rem', marginTop: '1rem' }}>🎥 Galería de los Talleres</h4>
-                <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                  <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#64748b' }}>Videos (.mp4) o Imágenes (1:1 o 3:4 recommended)</label>
-                  {(config.gallery || []).map((it: string, idx: number) => (
-                    <div key={idx} style={{ display: 'flex', gap: '0.6rem' }}>
-                      <input type="text" value={it || ''} onChange={(e) => { const ng = [...config.gallery]; ng[idx] = e.target.value; setConfig({ ...config, gallery: ng }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
-                      <button onClick={() => setConfig({ ...config, gallery: config.gallery.filter((_: any, i: number) => i !== idx) })} style={{ background: '#ff4d4f', color: 'white', border: 'none', borderRadius: '12px', padding: '0 0.8rem', cursor: 'pointer' }}>Eliminar</button>
-                    </div>
-                  ))}
-                  <button onClick={() => setConfig({ ...config, gallery: [...(config.gallery || []), ''] })} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0.8rem', borderRadius: '12px', fontWeight: 700, cursor: 'pointer' }}>+ Añadir Elemento</button>
+                <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid #cbd5e1', paddingLeft: '0.8rem', marginTop: '1rem' }}>🎥 Galería de los Talleres (Estructura fija: 2 videos y foto central)</h4>
+                <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  
+                  {/* Función auxiliar para subidas */}
+                  {(() => {
+                    const handleFileUpload = async (file: File, keyIndex: number) => {
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      try {
+                        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+                        const data = await res.json();
+                        if (data.success && data.url) {
+                          const ng = [...(config.gallery || [])];
+                          ng[keyIndex] = data.url;
+                          setConfig({ ...config, gallery: ng });
+                          alert('✅ Archivo subido correctamente!');
+                        } else { alert('❌ Error subiendo el archivo: ' + data.message); }
+                      } catch (e) { alert('❌ Error en la conexión al subir.'); }
+                    };
+
+                    return (
+                      <>
+                        {/* Casilla 1 */}
+                        <div>
+                          <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#1e293b', display: 'block', marginBottom: '0.4rem' }}>🎥 Slot 1: Video Lateral Izquierdo</label>
+                          <div style={{ display: 'flex', gap: '0.6rem' }}>
+                            <input type="text" value={config.gallery && config.gallery[0] || ''} onChange={(e) => { const ng = [...(config.gallery || [])]; ng[0] = e.target.value; setConfig({ ...config, gallery: ng }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} placeholder="/assets/video1.mp4" />
+                            <label style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
+                              Subir
+                              <input type="file" style={{ display: 'none' }} onChange={(e) => { if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 0); }} />
+                            </label>
+                          </div>
+                        </div>
+
+                        {/* Casilla 2 */}
+                        <div>
+                          <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#1e293b', display: 'block', marginBottom: '0.4rem' }}>📷 Slot 2: Imagen Central Fija</label>
+                          <div style={{ display: 'flex', gap: '0.6rem' }}>
+                            <input type="text" value={config.gallery && config.gallery[1] || ''} onChange={(e) => { const ng = [...(config.gallery || [])]; ng[1] = e.target.value; setConfig({ ...config, gallery: ng }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} placeholder="/assets/foto_centro.png" />
+                            <label style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
+                              Subir
+                              <input type="file" style={{ display: 'none' }} onChange={(e) => { if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 1); }} />
+                            </label>
+                          </div>
+                        </div>
+
+                        {/* Casilla 3 */}
+                        <div>
+                          <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#1e293b', display: 'block', marginBottom: '0.4rem' }}>🎥 Slot 3: Video Lateral Derecho</label>
+                          <div style={{ display: 'flex', gap: '0.6rem' }}>
+                            <input type="text" value={config.gallery && config.gallery[2] || ''} onChange={(e) => { const ng = [...(config.gallery || [])]; ng[2] = e.target.value; setConfig({ ...config, gallery: ng }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} placeholder="/assets/video2.mp4" />
+                            <label style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
+                              Subir
+                              <input type="file" style={{ display: 'none' }} onChange={(e) => { if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 2); }} />
+                            </label>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })()}
+
                 </div>
               </div>
             )}

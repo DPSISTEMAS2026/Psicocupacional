@@ -14,8 +14,8 @@ export async function POST(request: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Save into /assets/ root path
-    const dirPath = path.join(process.cwd(), 'assets');
+    // Save into /public/assets/ path
+    const dirPath = path.join(process.cwd(), 'public', 'assets');
     const filePath = path.join(dirPath, file.name);
 
     if (!fs.existsSync(dirPath)) {
