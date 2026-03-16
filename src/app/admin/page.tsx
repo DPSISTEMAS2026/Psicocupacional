@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 export default function AdminDashboard() {
   const [config, setConfig] = useState<any>({
-    home: { 
+    home: {
       heroTitle: '', heroSlogan: '', aboutTitle: '', aboutText: '', aboutImage: '',
       mision: '', vision: '', monitores: [], galeriaMomentos: [], redes: { tiktok: '', instagram: '' }
     },
@@ -25,47 +25,48 @@ export default function AdminDashboard() {
   const [uploadMsg, setUploadMsg] = useState('');
 
   useEffect(() => {
+    // Definición de Datos de Respaldo (Fallback) para emergencias o primer inicio
+    const fallbackHome = {
+      heroTitle: "Psicocupacional",
+      heroSlogan: "Habilidades para la vida, autonomía para participar y convivir.",
+      aboutImage: "/assets/1.png",
+      aboutText: "Psicocupacional es una iniciativa orientada a promover el desarrollo de habilidades para la vida en personas neurodivergentes, a través de espacios de aprendizaje, interacción social y experiencias prácticas en la comunidad.",
+      mision: "Promover el desarrollo de habilidades para la vida en personas neurodivergentes mediante espacios de aprendizaje, interacción social y experiencias prácticas que favorezcan su autonomía...",
+      vision: "Ser un espacio de referencia en el desarrollo de habilidades para la vida en personas neurodivergentes, promoviendo oportunidades de participación, autonomía y bienestar...",
+      monitores: [
+        { name: "Rocío Jerez U.", text: "Diplomada en inclusión social y educativa para personas con la condición del Espectro Autista. Especialista en autonomía y participación.", image: "/assets/rocio.jpg" },
+        { name: "Edgardo Pino E.", text: "Certificado en el modelo SCERTS, especialista en evaluación e intervención con población infanto-juvenil. Cuenta con más de 10 años de experiencia...", image: "/assets/edgardo.jpg" }
+      ],
+      galeriaMomentos: [
+        "/assets/WhatsApp Video 2026-03-13 at 10.37.14 AM.mp4",
+        "/assets/WhatsApp Video 2026-03-13 at 10.37.19 AM.mp4"
+      ],
+      redes: { instagram: "psicocupacional_", tiktok: "psicocupacional_" }
+    };
+
+    const fallbackClub = {
+      qa: [
+        { title: "¿Qué es?", content: "El Club 12/17 es un espacio grupal dirigido a adolescentes neurodivergentes donde se trabajan habilidades para la vida diaria a través de experiencias prácticas y significativas." },
+        { title: "¿A quién está dirigido?", content: "Está dirigido a adolescentes entre 12 y 21 años, principalmente jóvenes dentro del espectro autista u otras condiciones del neurodesarrollo..." },
+        { title: "¿Qué hacemos?", content: "En cada sesión realizamos actividades reales que permiten aprender haciendo, como manejar dinero, comprar en el supermercado, cocinar..." }
+      ],
+      talles: [
+        { title: "Manejo de dinero", icon: "💰", desc: "Aprendemos a reconocer precios, comparar productos, pagar y administrar dinero en situaciones reales." },
+        { title: "Compras en la comunidad", icon: "🛒", desc: "Practicamos cómo comprar en supermercados, farmacias o locales del barrio..." },
+        { title: "Cocina para la vida diaria", icon: "🍳", desc: "Preparamos comidas simples y funcionales que ayudan a desarrollar autonomía en la vida cotidiana." }
+      ]
+    };
+
+    const fallbackContacto = {
+      whatsapp: "56912345678",
+      correo: "contacto@psicocupacional.cl",
+      instagram: "psicocupacional_",
+      tiktok: "psicocupacional_"
+    };
+
     fetch('/api/config')
       .then(res => res.json())
       .then(data => {
-        const fallbackHome = {
-          heroTitle: "Psicocupacional",
-          heroSlogan: "Habilidades para la vida, autonomía para participar y convivir.",
-          aboutImage: "/assets/1.png",
-          aboutText: "Psicocupacional es una iniciativa orientada a promover el desarrollo de habilidades para la vida en personas neurodivergentes, a través de espacios de aprendizaje, interacción social y experiencias prácticas en la comunidad.",
-          mision: "Promover el desarrollo de habilidades para la vida en personas neurodivergentes mediante espacios de aprendizaje, interacción social y experiencias prácticas que favorezcan su autonomía...",
-          vision: "Ser un espacio de referencia en el desarrollo de habilidades para la vida en personas neurodivergentes, promoviendo oportunidades de participación, autonomía y bienestar...",
-          monitores: [
-            { name: "Rocío Jerez U.", text: "Diplomada en inclusión social y educativa para personas con la condición del Espectro Autista. Especialista en autonomía y participación.", image: "/assets/rocio.jpg" },
-            { name: "Edgardo Pino E.", text: "Certificado en el modelo SCERTS, especialista en evaluación e intervención con población infanto-juvenil. Cuenta con más de 10 años de experiencia...", image: "/assets/edgardo.jpg" }
-          ],
-          galeriaMomentos: [
-            "/assets/WhatsApp Video 2026-03-13 at 10.37.14 AM.mp4",
-            "/assets/WhatsApp Video 2026-03-13 at 10.37.19 AM.mp4"
-          ],
-          redes: { instagram: "psicocupacional_", tiktok: "psicocupacional_" }
-        };
-
-        const fallbackClub = {
-          qa: [
-            { title: "¿Qué es?", content: "El Club 12/17 es un espacio grupal dirigido a adolescentes neurodivergentes donde se trabajan habilidades para la vida diaria a través de experiencias prácticas y significativas." },
-            { title: "¿A quién está dirigido?", content: "Está dirigido a adolescentes entre 12 y 21 años, principalmente jóvenes dentro del espectro autista u otras condiciones del neurodesarrollo..." },
-            { title: "¿Qué hacemos?", content: "En cada sesión realizamos actividades reales que permiten aprender haciendo, como manejar dinero, comprar en el supermercado, cocinar..." }
-          ],
-          talles: [
-            { title: "Manejo de dinero", icon: "💰", desc: "Aprendemos a reconocer precios, comparar productos, pagar y administrar dinero en situaciones reales." },
-            { title: "Compras en la comunidad", icon: "🛒", desc: "Practicamos cómo comprar en supermercados, farmacias o locales del barrio..." },
-            { title: "Cocina para la vida diaria", icon: "🍳", desc: "Preparamos comidas simples y funcionales que ayudan a desarrollar autonomía en la vida cotidiana." }
-          ]
-        };
-
-        const fallbackContacto = {
-          whatsapp: "56912345678",
-          correo: "contacto@psicocupacional.cl",
-          instagram: "psicocupacional_",
-          tiktok: "psicocupacional_"
-        };
-
         const populated = {
           home: { 
             ...fallbackHome, 
@@ -89,30 +90,13 @@ export default function AdminDashboard() {
         setLoading(false);
       })
       .catch(() => {
-        // Safe Catch Fallback setup
-        const fallbackHome = {
-          heroTitle: "Psicocupacional",
-          heroSlogan: "Habilidades para la vida, autonomía para participar y convivir.",
-          aboutImage: "/assets/1.png",
-          aboutText: "Psicocupacional es una iniciativa orientada a promover el desarrollo de habilidades para la vida en personas neurodivergentes, a través de espacios de aprendizaje, interacción social y experiencias prácticas en la comunidad.",
-          mision: "Promover el desarrollo de habilidades para la vida en personas neurodivergentes mediante espacios de aprendizaje, interacción social y experiencias prácticas que favorezcan su autonomía...",
-          vision: "Ser un espacio de referencia en el desarrollo de habilidades para la vida en personas neurodivergentes, promoviendo oportunidades de participación, autonomía y bienestar...",
-          monitores: [
-            { name: "Rocío Jerez U.", text: "Diplomada en inclusión social y educativa para personas con la condición del Espectro Autista. Especialista en autonomía y participación.", image: "/assets/rocio.jpg" },
-            { name: "Edgardo Pino E.", text: "Certificado en el modelo SCERTS, especialista en evaluación e intervención con población infanto-juvenil. Cuenta con más de 10 años de experiencia...", image: "/assets/edgardo.jpg" }
-          ],
-          galeriaMomentos: [
-            "/assets/WhatsApp Video 2026-03-13 at 10.37.14 AM.mp4",
-            "/assets/WhatsApp Video 2026-03-13 at 10.37.19 AM.mp4"
-          ],
-          redes: { instagram: "psicocupacional_", tiktok: "psicocupacional_" }
-        };
+        // Safe Catch Fallback usa la misma estructura robusta
         const fallbackPopulated = {
           home: fallbackHome,
-          club: { qa: [], talles: [] },
-          contacto: { whatsapp: '', correo: '', instagram: '', tiktok: '' },
+          club: fallbackClub,
+          contacto: fallbackContacto,
           videoHome: '/assets/PSICOCUPACIONAL.mp4',
-          gallery: []
+          gallery: ["/assets/WhatsApp Video 2026-03-13 at 10.37.26 AM.mp4"]
         };
         setConfig(fallbackPopulated);
         setLoading(false);
@@ -206,7 +190,7 @@ export default function AdminDashboard() {
   return (
     <div style={{ backgroundColor: '#f4f7f6', minHeight: '100vh', padding: '4rem 2rem' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', backgroundColor: '#fff', borderRadius: '32px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)', padding: '3rem' }}>
-        <h1 style={{ fontSize: '2.2rem', color: '#1e293b', marginBottom: '1.5rem', fontWeight: 800 }}>Panel de Gestión Psikocupacional</h1>
+        <h1 style={{ fontSize: '2.2rem', color: '#1e293b', marginBottom: '1.5rem', fontWeight: 800 }}>Panel de Gestión</h1>
 
         {/* Pestanas */}
         <div style={{ display: 'flex', gap: '0.8rem', borderBottom: '2px solid #f1f5f9', paddingBottom: '1rem', marginBottom: '2rem', overflowX: 'auto' }}>
@@ -227,7 +211,7 @@ export default function AdminDashboard() {
             {currentTab === 'inicio' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h3 style={{ color: 'var(--calipso)' }}>🏡 Página Principal ("Qué hacemos")</h3>
-                
+
                 {/* Sub-Navegación de Secciones */}
                 <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap', backgroundColor: '#f8fafc', padding: '0.8rem', borderRadius: '16px' }}>
                   {[
@@ -245,9 +229,9 @@ export default function AdminDashboard() {
                 <div style={{ padding: '0.8rem 1rem', background: '#e0f2fe', borderLeft: '4px solid #0284c7', borderRadius: '12px', marginBottom: '1rem', fontSize: '0.9rem', color: '#0369a1', fontWeight: 700 }}>
                   📍 Modificando actualmente: {
                     subTab === 1 ? 'Portada y Presentación Superior' :
-                    subTab === 2 ? 'Filosofía Institucional (Misión y Visión)' :
-                    subTab === 3 ? 'Tarjetas Profesionales de Monitores' :
-                    subTab === 4 ? 'Galería de Momentos de la Home' : 'Cuentas de TikTok e Instagram'
+                      subTab === 2 ? 'Filosofía Institucional (Misión y Visión)' :
+                        subTab === 3 ? 'Tarjetas Profesionales de Monitores' :
+                          subTab === 4 ? 'Galería de Momentos de la Home' : 'Cuentas de TikTok e Instagram'
                   }
                 </div>
 
@@ -298,8 +282,8 @@ export default function AdminDashboard() {
                     {config.home && config.home.monitores && config.home.monitores.length > 0 ? (
                       config.home.monitores.map((mon: any, i: number) => (
                         <div key={i} style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '0.8rem', backgroundColor: '#fff' }}>
-                          <h4 style={{ color: 'var(--calipso)', fontWeight: 800 }}>Monitor #{i+1}: {mon.name || 'Sin Nombre'}</h4>
-                          
+                          <h4 style={{ color: 'var(--calipso)', fontWeight: 800 }}>Monitor #{i + 1}: {mon.name || 'Sin Nombre'}</h4>
+
                           <label style={{ fontWeight: 700, fontSize: '0.85rem' }}>🖼️ Foto de Perfil</label>
                           <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
                             <img src={mon.image || '/assets/rocio.jpg'} style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '10px' }} alt="Thumb" />
@@ -362,7 +346,7 @@ export default function AdminDashboard() {
             {currentTab === 'club' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
                 <h3 style={{ color: 'var(--calipso)' }}>🤝 Sección Club 12/17</h3>
-                
+
                 <h4 style={{ color: '#1e293b', fontWeight: 800, borderLeft: '4px solid var(--calipso)', paddingLeft: '0.8rem' }}>Preguntas y Respuestas (Q&A)</h4>
                 {(config.club.qa || []).map((item: any, i: number) => (
                   <div key={i} style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '0.8rem', backgroundColor: '#fff' }}>
@@ -399,7 +383,7 @@ export default function AdminDashboard() {
             {currentTab === 'contacto' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <h3 style={{ color: 'var(--calipso)' }}>📍 Página de Contacto</h3>
-                
+
                 <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   <div>
                     <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>💬 WhatsApp (Solo números)</label>
@@ -459,7 +443,7 @@ export default function AdminDashboard() {
                 <span style={{ width: '8px', height: '8px', background: 'var(--calipso)', borderRadius: '50%' }}></span> 👁️ Vista Previa en Vivo
               </div>
               <div style={{ padding: '1.5rem', height: 'calc(100% - 40px)', overflowY: 'auto' }}>
-                
+
                 {currentTab === 'inicio' && (
                   <div>
                     {subTab === 1 && (
@@ -529,7 +513,7 @@ export default function AdminDashboard() {
                         </div>
                       ))}
                     </div>
-                    
+
                     <h2 style={{ fontSize: '1.8rem', color: 'var(--foreground)', marginBottom: '2rem', textAlign: 'center', fontWeight: 800 }}>Talleres que tenemos</h2>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
                       {(config.club.talles || []).map((taller: any, i: number) => (
@@ -547,13 +531,13 @@ export default function AdminDashboard() {
                   <div>
                     <h2 style={{ fontSize: '1.6rem', color: '#0f172a', marginBottom: '1.5rem', fontWeight: 800 }}>Información de Contacto</h2>
                     <p style={{ opacity: 0.8, marginBottom: '2rem', fontSize: '0.85rem', lineHeight: 1.5 }}>Estamos ubicados en la comuna de Quintero. Contáctanos por cualquiera de nuestras vías para más información.</p>
-                    
+
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2.5rem' }}>
                       <div className="glass" style={{ padding: '1.2rem', borderRadius: '20px', borderLeft: '6px solid var(--calipso)', backgroundColor: '#fff', boxShadow: '0 10px 20px rgba(0,0,0,0.02)' }}>
                         <h5 style={{ opacity: 0.5, fontSize: '0.65rem', textTransform: 'uppercase' }}>Ubicación</h5>
                         <p style={{ fontWeight: 800, fontSize: '0.9rem', marginTop: '0.2rem' }}>📍 Quintero, V Región, Chile</p>
                       </div>
-                      
+
                       <div className="glass" style={{ padding: '1.2rem', borderRadius: '20px', borderLeft: '6px solid var(--magenta)', backgroundColor: '#fff', boxShadow: '0 10px 20px rgba(0,0,0,0.02)' }}>
                         <h5 style={{ opacity: 0.5, fontSize: '0.65rem', textTransform: 'uppercase' }}>Correo Electrónico</h5>
                         <p style={{ fontWeight: 800, fontSize: '0.9rem', marginTop: '0.2rem' }}>📧 {config.contacto.correo || 'correo@psicocupacional.cl'}</p>
