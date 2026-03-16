@@ -322,12 +322,20 @@ export default function AdminDashboard() {
                         {/* INPUT OCULTO CARGA */}
                         <input type="file" id={`up-gal-home-${idx}`} style={{ display: 'none' }} onChange={(e) => {
                           const file = e.target.files?.[0]; if (!file) return;
+                          const bnt = document.getElementById(`btn-gal-home-${idx}`);
+                          if (bnt) { bnt.innerText = '⌛...'; bnt.style.opacity = '0.6'; }
                           const formData = new FormData(); formData.append('file', file);
                           fetch('/api/upload', { method: 'POST', body: formData }).then(r => r.json()).then(res => {
-                            if (res.success) { const ng = [...config.home.galeriaMomentos]; ng[idx] = res.url; setConfig({ ...config, home: { ...config.home, galeriaMomentos: ng } }); }
-                          });
+                            if (bnt) { bnt.innerText = 'Subir'; bnt.style.opacity = '1'; }
+                            if (res.success) { 
+                              const ng = [...config.home.galeriaMomentos]; 
+                              ng[idx] = res.url; 
+                              setConfig({ ...config, home: { ...config.home, galeriaMomentos: ng } }); 
+                              alert('✅ Subido con éxito!');
+                            } else { alert('❌ Error: ' + res.message); }
+                          }).catch(() => { if (bnt) { bnt.innerText = 'Subir'; bnt.style.opacity = '1'; } });
                         }} />
-                        <button onClick={() => document.getElementById(`up-gal-home-${idx}`)?.click()} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0 0.8rem', borderRadius: '12px', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>Subir</button>
+                        <button id={`btn-gal-home-${idx}`} onClick={() => document.getElementById(`up-gal-home-${idx}`)?.click()} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0 0.8rem', borderRadius: '12px', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>Subir</button>
                         
                         <button onClick={() => setConfig({ ...config, home: { ...config.home, galeriaMomentos: config.home.galeriaMomentos.filter((_: any, i: number) => i !== idx) } })} style={{ background: '#ff4d4f', color: 'white', border: 'none', borderRadius: '12px', padding: '0 1rem', cursor: 'pointer' }}>Borrar</button>
                       </div>
