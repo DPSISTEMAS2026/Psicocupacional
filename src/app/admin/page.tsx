@@ -315,9 +315,20 @@ export default function AdminDashboard() {
                 {subTab === 4 && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <h4 style={{ color: '#1e293b' }}>Imágenes de Galería</h4>
-                    {config.home.galeriaMomentos && config.home.galeriaMomentos.map((img: string, idx: number) => (
+                    {(config.home.galeriaMomentos || []).map((img: string, idx: number) => (
                       <div key={idx} style={{ display: 'flex', gap: '0.8rem' }}>
                         <input type="text" value={img} onChange={(e) => { const ng = [...config.home.galeriaMomentos]; ng[idx] = e.target.value; setConfig({ ...config, home: { ...config.home, galeriaMomentos: ng } }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+                        
+                        {/* INPUT OCULTO CARGA */}
+                        <input type="file" id={`up-gal-home-${idx}`} style={{ display: 'none' }} onChange={(e) => {
+                          const file = e.target.files?.[0]; if (!file) return;
+                          const formData = new FormData(); formData.append('file', file);
+                          fetch('/api/upload', { method: 'POST', body: formData }).then(r => r.json()).then(res => {
+                            if (res.success) { const ng = [...config.home.galeriaMomentos]; ng[idx] = res.url; setConfig({ ...config, home: { ...config.home, galeriaMomentos: ng } }); }
+                          });
+                        }} />
+                        <button onClick={() => document.getElementById(`up-gal-home-${idx}`)?.click()} style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '0 0.8rem', borderRadius: '12px', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>Subir</button>
+                        
                         <button onClick={() => setConfig({ ...config, home: { ...config.home, galeriaMomentos: config.home.galeriaMomentos.filter((_: any, i: number) => i !== idx) } })} style={{ background: '#ff4d4f', color: 'white', border: 'none', borderRadius: '12px', padding: '0 1rem', cursor: 'pointer' }}>Borrar</button>
                       </div>
                     ))}
@@ -577,9 +588,18 @@ export default function AdminDashboard() {
                     )}
                     {subTab === 4 && (
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
-                        {config.home.galeriaMomentos?.map((g: string, i: number) => (
-                          <img key={i} src={g} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '8px' }} />
-                        ))}
+                        {config.home.galeriaMomentos?.map((g: string, i: number) => {
+                          if (!g) return null;
+                          const isVideo = String(g).toLowerCase().endsWith('.mp4');
+                          if (isVideo) {
+                            return (
+                              <div key={i} style={{ width: '100%', height: '80px', backgroundColor: '#000', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.8rem' }}>
+                                🎥 Video
+                              </div>
+                            );
+                          }
+                          return <img key={i} src={g} alt="Preview" style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '8px' }} />;
+                        })}
                       </div>
                     )}
                     {subTab === 5 && (
