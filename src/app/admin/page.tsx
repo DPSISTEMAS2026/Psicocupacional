@@ -504,23 +504,32 @@ export default function AdminDashboard() {
 
                 {currentTab === 'club' && (
                   <div>
-                    <h2 style={{ fontSize: '1.8rem', color: 'var(--calipso)', marginBottom: '1.5rem', fontWeight: 800 }}>Sobre el Club 12/17</h2>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', marginBottom: '2.5rem' }}>
-                      {(config.club.qa || []).map((item: any, i: number) => (
-                        <div key={i} style={{ paddingBottom: '1.2rem', borderBottom: '1px solid #f1f5f9' }}>
-                          <h4 style={{ fontSize: '1.1rem', color: 'var(--foreground)', marginBottom: '0.4rem', fontWeight: 700 }}>{item.title || 'Pregunta Sin Título'}</h4>
-                          <p style={{ fontSize: '0.85rem', opacity: 0.8, lineHeight: 1.5 }}>{item.content || 'Sin Respuesta'}</p>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1.2fr) 1fr', gap: '1rem', alignItems: 'flex-start' }}>
+                      <div>
+                        <h2 style={{ fontSize: '1.4rem', color: 'var(--calipso)', marginBottom: '1rem', fontWeight: 800 }}>Sobre el Club 12/17</h2>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
+                          {(config.club.qa || []).map((item: any, i: number) => (
+                            <div key={i} style={{ paddingBottom: '0.8rem', borderBottom: '1px solid #f1f5f9' }}>
+                              <h4 style={{ fontSize: '0.95rem', color: 'var(--foreground)', marginBottom: '0.2rem', fontWeight: 700 }}>{item.title || 'Pregunta Sin Título'}</h4>
+                              <p style={{ fontSize: '0.8rem', opacity: 0.8, lineHeight: 1.4, wordBreak: 'break-word' }}>{item.content || 'Sin Respuesta'}</p>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      </div>
+                      <div style={{ position: 'sticky', top: '0' }}>
+                        <div style={{ position: 'relative', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 35px rgba(0,0,0,0.08)', aspectRatio: '3/4' }}>
+                          <img src="/assets/WhatsApp Image 2026-03-13 at 10.39.25 AM.jpeg" alt="Actividad" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+                      </div>
                     </div>
 
-                    <h2 style={{ fontSize: '1.8rem', color: 'var(--foreground)', marginBottom: '2rem', textAlign: 'center', fontWeight: 800 }}>Talleres que tenemos</h2>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
+                    <h2 style={{ fontSize: '1.4rem', color: 'var(--foreground)', marginBottom: '1.2rem', textAlign: 'center', fontWeight: 800, marginTop: '1.5rem' }}>Talleres que tenemos</h2>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem', justifyContent: 'center' }}>
                       {(config.club.talles || []).map((taller: any, i: number) => (
-                        <div key={i} className="glass hover-glow" style={{ flex: '1 1 140px', maxWidth: '300px', padding: '1.2rem', borderRadius: '24px', backgroundColor: '#fff', borderLeft: '5px solid var(--yellow)', display: 'flex', flexDirection: 'column', gap: '0.5rem', boxShadow: '0 8px 24px rgba(0,0,0,0.03)' }}>
-                          <div style={{ fontSize: '1.8rem' }}>{taller.icon || '📌'}</div>
-                          <h5 style={{ fontSize: '0.95rem', color: 'var(--foreground)', fontWeight: 700 }}>{taller.title || 'Taller'}</h5>
-                          <p style={{ fontSize: '0.75rem', lineHeight: '1.4', opacity: 0.7 }}>{taller.desc || 'Descripción'}</p>
+                        <div key={i} className="glass hover-glow" style={{ flex: '1 1 130px', maxWidth: '240px', padding: '1rem', borderRadius: '20px', backgroundColor: '#fff', borderLeft: '4px solid var(--yellow)', display: 'flex', flexDirection: 'column', gap: '0.4rem', boxShadow: '0 8px 20px rgba(0,0,0,0.03)' }}>
+                          <div style={{ fontSize: '1.5rem' }}>{taller.icon || '📌'}</div>
+                          <h5 style={{ fontSize: '0.85rem', color: 'var(--foreground)', fontWeight: 700 }}>{taller.title || 'Taller'}</h5>
+                          <p style={{ fontSize: '0.7rem', lineHeight: '1.3', opacity: 0.7 }}>{taller.desc || 'Descripción'}</p>
                         </div>
                       ))}
                     </div>
