@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 export default function AdminDashboard() {
   const [config, setConfig] = useState<any>({
@@ -118,20 +119,26 @@ export default function AdminDashboard() {
     e.preventDefault();
     if (!uploadFile) return;
 
-    const formData = new FormData();
-    formData.append('file', uploadFile);
-
     setUploadMsg('Subiendo archivo...');
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData
-    }).then(r => r.json());
+    try {
+      const cleanName = uploadFile.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_.-]/g, '');
+      const { data, error } = await supabase.storage
+        .from('gallery')
+        .upload(cleanName, uploadFile, { upsert: true });
 
-    if (res.success) {
-      setUploadMsg(`✅ ¡Subido de forma exitosa! Copia la ruta: ${res.url}`);
+      if (error) {
+        setUploadMsg(`❌ Error: ${error.message}`);
+        return;
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from('gallery')
+        .getPublicUrl(cleanName);
+
+      setUploadMsg(`✅ ¡Subido de forma exitosa! Copia la ruta: ${publicUrlData.publicUrl}`);
       setUploadFile(null);
-    } else {
-      setUploadMsg(`❌ Error: ${res.message}`);
+    } catch (error: any) {
+      setUploadMsg(`❌ Error: ${error.message}`);
     }
   };
 
@@ -148,27 +155,33 @@ export default function AdminDashboard() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
+    try {
+      const cleanName = file.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_.-]/g, '');
+      const { data, error } = await supabase.storage
+        .from('gallery')
+        .upload(cleanName, file, { upsert: true });
 
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData
-    }).then(r => r.json());
+      if (error) {
+        alert('❌ Error: ' + error.message);
+        return;
+      }
 
-    if (res.success) {
+      const { data: publicUrlData } = supabase.storage
+        .from('gallery')
+        .getPublicUrl(cleanName);
+
       if (fieldName.includes('.')) {
         const [p1, p2] = fieldName.split('.');
         setConfig((prev: any) => ({
           ...prev,
-          [p1]: { ...prev[p1], [p2]: res.url }
+          [p1]: { ...prev[p1], [p2]: publicUrlData.publicUrl }
         }));
       } else {
-        setConfig((prev: any) => ({ ...prev, [fieldName]: res.url }));
+        setConfig((prev: any) => ({ ...prev, [fieldName]: publicUrlData.publicUrl }));
       }
       alert('✅ Subido con éxito!');
-    } else {
-      alert('❌ Error: ' + res.message);
+    } catch (error: any) {
+      alert('❌ Error de conexión: ' + error.message);
     }
   };
 
@@ -428,18 +441,34 @@ export default function AdminDashboard() {
                   {/* Función auxiliar para subidas */}
                   {(() => {
                     const handleFileUpload = async (file: File, keyIndex: number) => {
-                      const formData = new FormData();
-                      formData.append('file', file);
+                      const btn = document.getElementById(`btn-fixed-${keyIndex}`);
+                      if (btn) { btn.innerText = '⌛...'; btn.style.opacity = '0.6'; }
+                      
                       try {
-                        const res = await fetch('/api/upload', { method: 'POST', body: formData });
-                        const data = await res.json();
-                        if (data.success && data.url) {
-                          const ng = [...(config.gallery || [])];
-                          ng[keyIndex] = data.url;
-                          setConfig({ ...config, gallery: ng });
-                          alert('✅ Archivo subido correctamente!');
-                        } else { alert('❌ Error subiendo el archivo: ' + data.message); }
-                      } catch (e) { alert('❌ Error en la conexión al subir.'); }
+                        const cleanName = file.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_.-]/g, '');
+                        const { data, error } = await supabase.storage
+                          .from('gallery')
+                          .upload(cleanName, file, { upsert: true });
+
+                        if (btn) { btn.innerText = 'Subir'; btn.style.opacity = '1'; }
+
+                        if (error) {
+                          alert('❌ Error subiendo el archivo: ' + error.message);
+                          return;
+                        }
+
+                        const { data: publicUrlData } = supabase.storage
+                          .from('gallery')
+                          .getPublicUrl(cleanName);
+
+                        const ng = [...(config.gallery || [])];
+                        ng[keyIndex] = publicUrlData.publicUrl;
+                        setConfig({ ...config, gallery: ng });
+                        alert('✅ Archivo subido correctamente!');
+                      } catch (e: any) { 
+                        if (btn) { btn.innerText = 'Subir'; btn.style.opacity = '1'; }
+                        alert('❌ Error en la conexión al subir: ' + e.message); 
+                      }
                     };
 
                     return (
@@ -449,7 +478,7 @@ export default function AdminDashboard() {
                           <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#1e293b', display: 'block', marginBottom: '0.4rem' }}>🎥 Slot 1: Video Lateral Izquierdo</label>
                           <div style={{ display: 'flex', gap: '0.6rem' }}>
                             <input type="text" value={config.gallery && config.gallery[0] || ''} onChange={(e) => { const ng = [...(config.gallery || [])]; ng[0] = e.target.value; setConfig({ ...config, gallery: ng }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} placeholder="/assets/video1.mp4" />
-                            <label style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
+                            <label id="btn-fixed-0" style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
                               Subir
                               <input type="file" style={{ display: 'none' }} onChange={(e) => { if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 0); }} />
                             </label>
@@ -461,7 +490,7 @@ export default function AdminDashboard() {
                           <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#1e293b', display: 'block', marginBottom: '0.4rem' }}>📷 Slot 2: Imagen Central Fija</label>
                           <div style={{ display: 'flex', gap: '0.6rem' }}>
                             <input type="text" value={config.gallery && config.gallery[1] || ''} onChange={(e) => { const ng = [...(config.gallery || [])]; ng[1] = e.target.value; setConfig({ ...config, gallery: ng }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} placeholder="/assets/foto_centro.png" />
-                            <label style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
+                            <label id="btn-fixed-1" style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
                               Subir
                               <input type="file" style={{ display: 'none' }} onChange={(e) => { if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 1); }} />
                             </label>
@@ -473,7 +502,7 @@ export default function AdminDashboard() {
                           <label style={{ fontWeight: 700, fontSize: '0.85rem', color: '#1e293b', display: 'block', marginBottom: '0.4rem' }}>🎥 Slot 3: Video Lateral Derecho</label>
                           <div style={{ display: 'flex', gap: '0.6rem' }}>
                             <input type="text" value={config.gallery && config.gallery[2] || ''} onChange={(e) => { const ng = [...(config.gallery || [])]; ng[2] = e.target.value; setConfig({ ...config, gallery: ng }); }} style={{ flex: 1, padding: '0.7rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} placeholder="/assets/video2.mp4" />
-                            <label style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
+                            <label id="btn-fixed-2" style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '12px', padding: '0.7rem 1rem', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
                               Subir
                               <input type="file" style={{ display: 'none' }} onChange={(e) => { if (e.target.files?.[0]) handleFileUpload(e.target.files[0], 2); }} />
                             </label>
