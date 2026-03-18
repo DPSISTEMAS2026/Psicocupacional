@@ -524,7 +524,23 @@ export default function AdminDashboard() {
                 <div style={{ padding: '1.5rem', border: '1px solid #e2e8f0', borderRadius: '16px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   <div>
                     <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>💬 WhatsApp (Solo números)</label>
-                    <input type="text" value={config.contacto.whatsapp || ''} onChange={(e) => setConfig({ ...config, contacto: { ...config.contacto, whatsapp: e.target.value } })} placeholder="56912345678" style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+                    <input 
+                      type="text" 
+                      value={config.contacto.whatsapp || ''} 
+                      onChange={(e) => {
+                        let val = e.target.value;
+                        if (val.includes('wa.me/')) {
+                          val = val.split('wa.me/')[1];
+                        }
+                        const cleanVal = val.replace(/[^0-9]/g, '');
+                        setConfig({ ...config, contacto: { ...config.contacto, whatsapp: cleanVal } });
+                      }} 
+                      placeholder="56912345678" 
+                      style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1' }} 
+                    />
+                    <p style={{ fontSize: '0.8rem', opacity: 0.6, marginTop: '0.4rem', color: '#64748b' }}>
+                      💡 Ingresa solo los números (ej: 56912345678). Se eliminarán automáticamente letras, enlaces o símbolos como el +.
+                    </p>
                   </div>
                   <div>
                     <label style={{ display: 'block', fontWeight: 700, marginBottom: '0.5rem' }}>📧 Correo Electrónico</label>
@@ -699,7 +715,13 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    <a href="#" className="btn hover-glow" style={{ background: '#25D366', color: 'white', padding: '1.2rem', borderRadius: '20px', fontWeight: 800, fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem', width: '100%', boxShadow: '0 10px 20px rgba(37, 211, 102, 0.2)', marginBottom: '1.5rem', textDecoration: 'none' }}>
+                    <a 
+                      href={`https://wa.me/${config.contacto.whatsapp}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="btn hover-glow" 
+                      style={{ background: '#25D366', color: 'white', padding: '1.2rem', borderRadius: '20px', fontWeight: 800, fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem', width: '100%', boxShadow: '0 10px 20px rgba(37, 211, 102, 0.2)', marginBottom: '1.5rem', textDecoration: 'none' }}
+                    >
                       <span>💬 Contactar por WhatsApp: {config.contacto.whatsapp || 'Sin WhatsApp'}</span>
                     </a>
                   </div>
